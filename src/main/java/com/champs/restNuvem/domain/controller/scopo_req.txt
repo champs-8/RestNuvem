@@ -1,0 +1,27 @@
+{
+  "name": "champs",
+  "account": {
+    "number": "45681",
+    "agency": "0001",
+    "balance": 8950,
+    "limit": 1000
+  },
+  "card": {
+    "number": "xxxx-xxxx-xxxx",
+    "ccv": 555,
+    "type": ["debito", "credito"],
+    "limit": 500
+  },
+  "feature": [
+    {
+      "icon": "pix",
+      "description": "pix"
+    }
+  ],
+  "news": [
+    {
+      "icon": "dinheiro",
+      "description": "saque rapido"
+    }
+  ]
+}
