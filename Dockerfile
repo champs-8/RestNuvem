@@ -1,14 +1,21 @@
-# Imagem oficial com JDK 17 (ou 21 se seu projeto usar)
-FROM eclipse-temurin:17-jdk
+# Etapa 1: Imagem com Java e Gradle para build
+FROM gradle:8.4.0-jdk17 AS builder
 
-# Define o diretório de trabalho
-WORKDIR /app
+# Copia o projeto
+COPY --chown=gradle:gradle . /home/gradle/project
+WORKDIR /home/gradle/project
 
-# Copia os arquivos necessários
-COPY build/libs/restNuvem-0.0.1-SNAPSHOT.jar app.jar
+# Gera o .jar
+RUN gradle build --no-daemon
 
-# Expõe a porta que o Render define
+# Etapa 2: Imagem leve com JRE para rodar a aplicação
+FROM eclipse-temurin:17-jre
+
+# Copia o .jar da etapa anterior
+COPY --from=builder /home/gradle/project/build/libs/restNuvem-0.0.1-SNAPSHOT.jar app.jar
+
+# Exponha a porta que o Render usa (geralmente 8080)
 EXPOSE 8080
 
-# Comando para iniciar a aplicação
+# Comando para rodar a aplicação
 CMD ["java", "-jar", "app.jar"]
