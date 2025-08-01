@@ -9,14 +9,23 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserService userService;
     //constructor injection automatically provided by @RequiredArgsConstructor
+    private final UserService userService;
+
+    @GetMapping("/") //mostrar a mensagem de status da API
+    public Map<String, String> statusRoot() {
+        Map<String, String> resposta = new HashMap<>();
+        resposta.put("mensagem", "API Restful da DIO está ativa!");
+        return resposta;
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<User> findById(@PathVariable Long id) {
